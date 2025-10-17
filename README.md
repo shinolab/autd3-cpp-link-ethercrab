@@ -8,8 +8,10 @@
 
 ## LICENSE
 
-* See [LICENSE](./LICENSE) and [ThirdPartyNotices](./ThirdPartyNotices.txt) for more information.
+MIT
+
+This library depends on some third-party libraries. Please check their licenses in the `ThirdPartyNotices.txt` in the distributed assets.
 
 # Author
 
-Shun Suzuki, 2022-2025
+Shun Suzuki, 2025
