@@ -5,7 +5,7 @@
 namespace autd3 {
 
 namespace link::ethercrab {
-static inline std::string version = "37.0.0-alpha.3";
+static inline std::string version = "37.0.0";
 }
 
 }  // namespace autd3
