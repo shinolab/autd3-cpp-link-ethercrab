@@ -47,7 +47,7 @@ target_sources(test_autd3 PRIVATE
 include(GoogleTest)
 gtest_discover_tests(test_autd3)
 
-if(WIN32)
+if(MSVC)
   target_link_options(test_autd3 PRIVATE /NODEFAULTLIB:libcmt.lib /NODEFAULTLIB:libcmtd.lib /NODEFAULTLIB:msvcrtd.lib)
 endif()
 
