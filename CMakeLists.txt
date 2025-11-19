@@ -61,8 +61,7 @@ if(WIN32)
   set_property(GLOBAL PROPERTY USE_FOLDERS ON)
   add_custom_target(autd3_capi_link_ethercrab)
   add_custom_command(TARGET autd3_capi_link_ethercrab POST_BUILD
-    COMMAND ${CMAKE_COMMAND} -E make_directory ${CMAKE_BINARY_DIR}/$<CONFIG>
-    COMMAND ${CMAKE_COMMAND} -E copy_if_different "${PROJECT_SOURCE_DIR}/bin/autd3_capi_link_ethercrab.dll" ${CMAKE_BINARY_DIR}/$<CONFIG>
+    COMMAND ${CMAKE_COMMAND} -E copy_if_different "${PROJECT_SOURCE_DIR}/bin/autd3_capi_link_ethercrab.dll" ${CMAKE_BINARY_DIR}
     VERBATIM
   )
   set_property(TARGET autd3_capi_link_ethercrab PROPERTY FOLDER "autd3capi") 
