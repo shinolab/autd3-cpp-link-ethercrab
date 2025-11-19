@@ -4,15 +4,15 @@
 #include <sstream>
 
 TEST(Link, Status) {
-  const auto lost = autd3::link::Status::Lost();
-  const auto state_change = autd3::link::Status::StateChanged();
-  const auto err = autd3::link::Status::Error();
-  const auto resumed = autd3::link::Status::Resumed();
+  const auto lost = autd3::link::Status::Lost;
+  const auto state_change = autd3::link::Status::StateChanged;
+  const auto err = autd3::link::Status::Error;
+  const auto resumed = autd3::link::Status::Resumed;
 
-  ASSERT_EQ(lost, autd3::link::Status::Lost());
-  ASSERT_EQ(state_change, autd3::link::Status::StateChanged());
-  ASSERT_EQ(err, autd3::link::Status::Error());
-  ASSERT_EQ(resumed, autd3::link::Status::Resumed());
+  ASSERT_EQ(lost, autd3::link::Status::Lost);
+  ASSERT_EQ(state_change, autd3::link::Status::StateChanged);
+  ASSERT_EQ(err, autd3::link::Status::Error);
+  ASSERT_EQ(resumed, autd3::link::Status::Resumed);
   ASSERT_NE(lost, state_change);
   ASSERT_NE(lost, err);
   ASSERT_NE(lost, resumed);

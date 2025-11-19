@@ -3,8 +3,6 @@
 #include <chrono>
 #include <optional>
 #include <string>
-#include <variant>
-#include <vector>
 
 #include "autd3/native_methods.hpp"
 #include "autd3/native_methods/utils.hpp"
@@ -16,20 +14,25 @@ class Status {
   native_methods::Status _inner;
   std::string _msg;
 
-  explicit Status(const native_methods::Status inner, std::string msg) : _inner(inner), _msg(std::move(msg)) {}
-
  public:
+  AUTD3_API static const Status Lost;
+  AUTD3_API static const Status Error;
+  AUTD3_API static const Status StateChanged;
+  AUTD3_API static const Status Resumed;
+
   friend struct EtherCrab;
 
-  static Status Lost() { return Status(native_methods::Status::Lost, ""); }
-  static Status Error() { return Status(native_methods::Status::Error, ""); }
-  static Status StateChanged() { return Status(native_methods::Status::StateChanged, ""); }
-  static Status Resumed() { return Status(native_methods::Status::Resumed, ""); }
+  explicit Status(const native_methods::Status inner, std::string msg) : _inner(inner), _msg(std::move(msg)) {}
 
   bool operator==(const Status& that) const { return _inner == that._inner && _msg == that._msg; }
 
   friend std::ostream& operator<<(std::ostream& os, const Status& s);
 };
+
+inline const Status Status::Lost = Status(native_methods::Status::Lost, "");
+inline const Status Status::Error = Status(native_methods::Status::Error, "");
+inline const Status Status::StateChanged = Status(native_methods::Status::StateChanged, "");
+inline const Status Status::Resumed = Status(native_methods::Status::Resumed, "");
 
 inline std::ostream& operator<<(std::ostream& os, const Status& s) {
   os << s._msg;
@@ -62,7 +65,7 @@ struct EtherCrabOption {
 struct EtherCrab final {
   using err_handler_t = void (*)(uint16_t, Status);
 
-  explicit EtherCrab(const err_handler_t err_handler, const EtherCrabOption option) : err_handler(err_handler), option(option) {
+  explicit EtherCrab(const err_handler_t err_handler, EtherCrabOption option) : err_handler(err_handler), option(std::move(option)) {
     _native_err_handler = +[](const void* context, const uint32_t slave, const native_methods::Status status) {           // LCOV_EXCL_LINE
       const std::string msg(128, ' ');                                                                                    // LCOV_EXCL_LINE
       (void)AUTDLinkEtherCrabStatusGetMsg(status, const_cast<char*>(msg.c_str()));                                        // LCOV_EXCL_LINE
