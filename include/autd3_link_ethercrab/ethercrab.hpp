@@ -27,6 +27,7 @@ class Status {
   bool operator==(const Status& that) const { return _inner == that._inner && _msg == that._msg; }
 
   friend std::ostream& operator<<(std::ostream& os, const Status& s);
+  friend struct std::formatter<Status>;
 };
 
 inline const Status Status::Lost = Status(native_methods::Status::Lost, "");
@@ -38,11 +39,6 @@ inline std::ostream& operator<<(std::ostream& os, const Status& s) {
   os << s._msg;
   return os;
 }
-
-template <class F>
-concept ethercrab_err_handler_f = requires(F f, const uint16_t slave, const Status status) {
-  { f(slave, status) } -> std::same_as<void>;
-};
 
 struct EtherCrabOption {
   std::optional<std::string> ifname = std::nullopt;
@@ -86,3 +82,11 @@ struct EtherCrab final {
 };
 
 }  // namespace autd3::link
+
+namespace std {
+template <>
+struct formatter<autd3::link::Status> : std::formatter<const char*> {
+  auto format(autd3::link::Status s, std::format_context& ctx) const { return std::formatter<const char*>::format(s._msg.c_str(), ctx); }
+};
+
+}  // namespace std
