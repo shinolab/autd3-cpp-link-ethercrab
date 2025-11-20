@@ -1,3 +1,5 @@
+#include <format>
+
 #include "autd3.hpp"
 #include "autd3_link_ethercrab.hpp"
 #include "util.hpp"

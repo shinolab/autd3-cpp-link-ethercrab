@@ -40,11 +40,6 @@ inline std::ostream& operator<<(std::ostream& os, const Status& s) {
   return os;
 }
 
-template <class F>
-concept ethercrab_err_handler_f = requires(F f, const uint16_t slave, const Status status) {
-  { f(slave, status) } -> std::same_as<void>;
-};
-
 struct EtherCrabOption {
   std::optional<std::string> ifname = std::nullopt;
   std::chrono::nanoseconds state_check_period = std::chrono::milliseconds(100);
@@ -89,16 +84,9 @@ struct EtherCrab final {
 }  // namespace autd3::link
 
 namespace std {
-template <class CharT>
-struct formatter<autd3::link::Status, CharT> {
-  template <typename FormatParseContext>
-  auto parse(FormatParseContext& pc) {
-    return pc.begin();
-  }
-
-  template <typename FormatContext>
-  auto format(autd3::link::Status s, FormatContext& fc) const {
-    return std::format_to(fc.out(), "{}", s._msg);
-  }
+template <>
+struct formatter<autd3::link::Status> : std::formatter<const char*> {
+  auto format(autd3::link::Status s, std::format_context& ctx) const { return std::formatter<const char*>::format(s._msg.c_str(), ctx); }
 };
+
 }  // namespace std
