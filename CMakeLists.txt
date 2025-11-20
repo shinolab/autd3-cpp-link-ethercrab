@@ -8,7 +8,7 @@ project(autd3_link_ethercrab VERSION 38.0.0)
 
 message(STATUS "Build autd3_link_ethercrab: ${PROJECT_VERSION}")
 
-set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
